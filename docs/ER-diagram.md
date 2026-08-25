@@ -1,4 +1,6 @@
-      ```mermaid
+# Database ER Diagram
+
+```mermaid
 erDiagram
     USERS ||--o{ FOLDERS : owns
     USERS ||--o{ FILES : owns
@@ -10,7 +12,6 @@ erDiagram
     USERS ||--o{ STARS : creates
     FILES ||--o{ STARS : receives
 ```
-
     USERS {
         int id PK
         string name
