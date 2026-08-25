@@ -1,17 +1,15 @@
+      ```mermaid
 erDiagram
-
     USERS ||--o{ FOLDERS : owns
     USERS ||--o{ FILES : owns
     FOLDERS ||--o{ FILES : contains
     FOLDERS ||--o{ FOLDERS : contains
-
     FILES ||--o{ SHARES : has
     USERS ||--o{ SHARES : receives
-
     FILES ||--o{ LINK_SHARES : has
-
     USERS ||--o{ STARS : creates
     FILES ||--o{ STARS : receives
+```
 
     USERS {
         int id PK
