@@ -1,17 +1,25 @@
 # Database ER Diagram
 
+This diagram represents the database structure for the Cloud Based Media File Storage Service.
+
 ```mermaid
 erDiagram
+
     USERS ||--o{ FOLDERS : owns
     USERS ||--o{ FILES : owns
+
     FOLDERS ||--o{ FILES : contains
     FOLDERS ||--o{ FOLDERS : contains
+
     FILES ||--o{ SHARES : has
     USERS ||--o{ SHARES : receives
+
     FILES ||--o{ LINK_SHARES : has
+
     USERS ||--o{ STARS : creates
     FILES ||--o{ STARS : receives
-```
+
+
     USERS {
         int id PK
         string name
@@ -68,3 +76,16 @@ erDiagram
         int file_id FK
         datetime created_at
     }
+```
+
+## Relationship Summary
+
+- One user can own many folders.
+- One user can own many files.
+- One folder can contain many files.
+- One folder can contain other folders.
+- One file can be shared with many users.
+- One user can receive many file shares.
+- One file can have multiple public share links.
+- One user can star many files.
+- One file can be starred by multiple users.
