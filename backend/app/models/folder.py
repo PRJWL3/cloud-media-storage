@@ -1,16 +1,23 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from app.core.database import Base
+from datetime import datetime
+from typing import Optional
+from sqlalchemy import DateTime, Integer, String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.database import Base
+
 
 class Folder(Base):
     __tablename__ = "folders"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    parent_id = Column(Integer, ForeignKey("folders.id"), nullable=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="folders")
-    parent = relationship("Folder", remote_side=[id], back_populates="subfolders")
-    subfolders = relationship("Folder", back_populates="parent", cascade="all, delete-orphan")
-    files = relationship("File", back_populates="folder")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    parent_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("folders.id"), nullable=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False,
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
