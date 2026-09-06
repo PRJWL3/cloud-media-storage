@@ -174,11 +174,9 @@ const MainDriveContent: React.FC = () => {
 
 export default function App() {
   const pathname = window.location.pathname;
-  if (pathname.startsWith('/s/')) {
-    const token = pathname.substring(3).replace(/^\/+|\/+$/g, '');
-    if (token) {
-      return <PublicShareView token={token} />;
-    }
+  const shareMatch = pathname.match(/\/s\/([^/?#]+)/);
+  if (shareMatch && shareMatch[1]) {
+    return <PublicShareView token={shareMatch[1]} />;
   }
 
   return (
